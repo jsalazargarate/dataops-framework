@@ -5,8 +5,8 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "data/**"
-      - "framework/ingestion/**"
+      - "framework_base/data/**"
+      - "framework_base/framework/ingestion/**"
       - ".github/workflows/dataops-pipeline.yml"
 
 jobs:
@@ -32,13 +32,10 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          CSV_PATH: data/source/customers.csv
+          CSV_PATH: framework_base/data/source/customers.csv
           TARGET_TABLE: demo.bronze_customers
           SOURCE_NAME: github_actions
         run: |
-          echo "PWD:"
-          pwd
-          echo "Listing repo root:"
-          ls -la
           echo "Running bronze ingestion..."
-          python framework/ingestion/ingest_bronze.py
+          # Agrega framework_base al inicio de la ruta
+          python framework_base/framework/ingestion/ingest_bronze.py
